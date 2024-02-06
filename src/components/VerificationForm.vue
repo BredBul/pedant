@@ -31,7 +31,7 @@ const errorMessage = ref("");
 
 onMounted(() => {
   if (store.requestSent) {
-    store.startCountdown();
+    store.startCountdown(60);
   }
 });
 

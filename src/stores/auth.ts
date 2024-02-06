@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import config from "@/config.ts";
-import { computed, Ref, ref } from "vue";
+import { Ref, ref } from "vue";
 
 const { url, username, password } = config;
 
@@ -22,15 +22,11 @@ export const useAuthStore = defineStore("auth", () => {
     JSON.parse(localStorage.getItem("user") || "null"),
   );
 
-  const getToken = computed(() => token.value);
-
-  const countdownSeconds = 60;
-
-  const countdownRemaining = ref(
+  const countdownRemaining: Ref<number> = ref(
     Number(sessionStorage.getItem("countdownRemaining")) || 0,
   );
 
-  function startCountdown() {
+  function startCountdown(countdownSeconds: number) {
     sessionStorage.setItem("countdownInterval", "true");
     countdownRemaining.value =
       Number(sessionStorage.getItem("countdownRemaining")) || countdownSeconds;
@@ -112,7 +108,6 @@ export const useAuthStore = defineStore("auth", () => {
   return {
     user,
     token,
-    getToken,
     verifyOtp,
     generateOtp,
     phoneNumber,
